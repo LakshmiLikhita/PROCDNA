@@ -48,14 +48,14 @@ See `ERD.pdf` for the full data model.
 
 ## Data Profiling Summary
 
-| # | Profiling | Xponent_Weekly | HCP_Master |
-|---|---|---|---|
-| 1 | `Null values` | No null values in critical columns |  No null values in critical columns |
-| 2 | `Duplicates` | No duplicate prescription records | No Duplicate HCP or NPI ids |
-| 3 | `Standardised Naming` | Drug naming conventions are standardized, NPI needs to be padded to make it 10 digit and standardised | NPI needs to be padded to make it 10 digit and standardised|
-| 4 | `Outliers` | None | None |
-| 5 | `Grain` | 1 row per week+npi+drug | 1 row per HCP |
-| 6 | `Observations` | One non-standard HCP_ID value ("DO") identified | one HCP who is not a prescriber identified |
+| # | Profiling | Xponent_Weekly | HCP_Master | Zip_Territory_Mapping | Claims_Data | Veeva_CRM_Calls |
+|---|---|---|---|---|---|---|
+| 1 | `Null values` | No null values in critical columns | No null values in critical columns | No null values in critical columns |
+| 2 | `Duplicates` | No duplicate prescription records | No Duplicate HCP or NPI ids | No overlap assignment of reps and territories/ broken SCD |
+| 3 | `Standardised Naming` | Drug naming conventions are standardized, NPI needs to be padded to make it 10 digit and standardised | NPI needs to be padded to make it 10 digit and standardised | Standardised Zip, territory id, rep id, district ids | NPI needs to be padded to make it 10 digit and standardised | NPI needs to be padded to make it 10 digit and standardised |
+| 4 | `Outliers` | None | None | None | None | No calls were above 1 hour duration |
+| 5 | `Grain` | 1 row per week+npi+drug | 1 row per HCP | 1 row per zip+territory+rep | 1 row per claim id | 1 row per call id |
+| 6 | `Observations` | One non-standard HCP_ID value ("DO") identified | one HCP who is not a prescriber identified | NA  | NA | Few reps (`REP002, REP003`) are making calls outside their territory. No overlapping calls of reps with HCPs |
 
 
 - **Xpnent_Weekly:**
