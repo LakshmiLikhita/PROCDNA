@@ -46,6 +46,17 @@ See `ERD.pdf` for the full data model.
   into a scheduled task/orchestration tool as pass/fail gates, not just be read
   manually.
 
+## Data Profiling Summary
+
+- **Xpnent_Weekly:**
+  No null values in critical columns
+  No duplicate prescription records
+  Drug naming conventions are standardized
+  Grain validated successfully `1 row per week+npi+drug`
+  New Rx + Refill Rx = Total Rx
+  `One non-standard HCP_ID value ("DO") identified`
+  `NPI formatting should continue to be monitored during ingestion and integration`
+
 ## Known limitations / next steps
 
 - Only `ARD_HCP_MONTHLY` is built end-to-end. A production version would add
