@@ -48,6 +48,16 @@ See `ERD.pdf` for the full data model.
 
 ## Data Profiling Summary
 
+| # | Profiling | Xponent_Weekly | HCP_Master |
+|---|---|---|---|
+| 1 | `Null values` | No null values in critical columns |
+| 2 | `Duplicates` | No duplicate prescription records |
+| 3 | `Standardised Naming` | Drug naming conventions are standardized, NPI needs to be padded to make it 10 digit and standardised |
+| 4 | `Outliers` | None |
+| 5 | `Grain` | 1 row per week+npi+drug |
+| 6 | `Observations` | One non-standard HCP_ID value ("DO") identified |
+
+
 - **Xpnent_Weekly:**
   No null values in critical columns
   No duplicate prescription records
