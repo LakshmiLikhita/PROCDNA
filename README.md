@@ -20,13 +20,13 @@ See `ERD.pdf` for the full data model.
 
 ## Files, in build order
 
-| # | File | What it does |
+| # | File | Function |
 |---|---|---|
-| 1 | `01_data_profiling.sql` | Row counts, null/duplicate checks, NPI format validation, cross-source referential checks against all 5 raw tables |
-| 2 | `02_staging_cleanup.sql` | Standardizes NPI (`npi` as-landed + `npi_clean` derived), dedupes HCP Master to 1 row per HCP, standardizes dates/casing per source |
-| 3 | `03_edw_dims_facts.sql` | `dim_hcp`, `dim_territory`, `dim_rep`, `map_territory_rep`, `dim_date`, `fact_rx`, `fact_calls`, `fact_claims_patient` (atomic), `fact_claims` (HCP/month aggregate) |
-| 4 | `04_ard_hcp_monthly.sql` | Final ARD: 1 row per HCP per month, combining Rx/calls/claims with derived metrics (rx-per-call ratio, territory/specialty rollups) |
-| 5 | `05_ard_dq_checks.sql` | Validation suite against the ARD — grain, nulls, referential integrity, row-count and metric reconciliation vs. sources, domain checks |
+| 1 | `DataProfiling.sql` | Row counts, null/duplicate checks, NPI format validation, cross-source referential checks against all 5 raw tables |
+| 2 | `Staging.sql` | Standardizes NPI (`npi` as-landed + `npi_clean` derived), dedupes HCP Master to 1 row per HCP, standardizes dates/casing per source |
+| 3 | `Edw_dims_facts.sql` | `dim_hcp`, `dim_territory`, `dim_rep`, `map_territory_rep`, `dim_date`, `fact_rx`, `fact_calls`, `fact_claims_patient` (atomic), `fact_claims` (HCP/month aggregate) |
+| 4 | `ard_hcp_monthly.sql` | Final ARD: 1 row per HCP per month, combining Rx/calls/claims with derived metrics (rx-per-call ratio, territory/specialty rollups) |
+| 5 | `ard_dq_checks.sql` | Validation suite against the ARD — grain, nulls, referential integrity, row-count and metric reconciliation vs. sources, domain checks |
 | — | `data_profiling_checklist.md` | Reusable profiling checklist template + worked findings for all 5 sources |
 | — | `ERD.pdf` | Star schema diagram |
 
