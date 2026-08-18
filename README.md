@@ -30,7 +30,7 @@ See `ERD.pdf` for the full data model.
 | — | `data_profiling_checklist.md` | Reusable profiling checklist template + worked findings for all 5 sources |
 | — | `ERD.pdf` | Star schema diagram |
 
-## Key design decisions
+## Key design decisions/Assumptions
 
 - **`npi` and `npi_clean` both retained** on every staging/EDW table (not a separate
   view) — full lineage from as-landed value to standardized value, and padding an
