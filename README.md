@@ -121,6 +121,9 @@ DIM_TERRITORY.territory_key = MAP_TERRITORY_REP.territory_key
 ```sql
 DIM_TERRITORY.territory_key = DIM_HCP.territory_key
 ```
+## DIM_DATE → FACT_CALLS, FACT_CLAIMS, FACT_CLAIMS_PATIENT
+
+**Relationship Type:** One-to-Many (1:M) - Many patient claims/sales calls can be processed on a single date.
 
 ## Known limitations / next steps
 
