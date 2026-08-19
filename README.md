@@ -57,6 +57,21 @@ See `ERD.pdf` for the full data model.
 | 5 | `Grain` | 1 row per week+npi+drug | 1 row per HCP | 1 row per zip+territory+rep | 1 row per claim id | 1 row per call id |
 | 6 | `Observations` | One non-standard HCP_ID value ("DO") identified | one HCP who is not a prescriber identified | NA  | NA | Few reps (`REP002, REP003`) are making calls outside their territory. No overlapping calls of reps with HCPs |
 
+## Entity Relationship Overview
+
+The Enterprise Data Warehouse (EDW) follows a **dimensional (Star Schema) modeling approach**, where fact tables capture business events and dimension tables provide descriptive business context. The model is designed to support commercial analytics use cases such as HCP targeting, physician segmentation, territory performance analysis, and sales force effectiveness.
+
+---
+
+## DIM_HCP → FACT_RX
+
+**Relationship Type:** One-to-Many (1:M) - A single Healthcare Professional (HCP) can generate multiple prescription transactions across different products and reporting periods.
+
+**Join Key**
+
+```sql
+DIM_HCP.hcp_key = FACT_RX.hcp_key
+
 
 ## Known limitations / next steps
 
