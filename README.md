@@ -63,7 +63,7 @@ The Enterprise Data Warehouse (EDW) follows a **dimensional (Star Schema) modeli
 
 ---
 
-## DIM_HCP → FACT_RX
+### DIM_HCP → FACT_RX
 
 **Relationship Type:** One-to-Many (1:M) - A single Healthcare Professional (HCP) can generate multiple prescription transactions across different products and reporting periods.
 
@@ -73,7 +73,7 @@ The Enterprise Data Warehouse (EDW) follows a **dimensional (Star Schema) modeli
 DIM_HCP.hcp_key = FACT_RX.hcp_key
 ```
 
-## DIM_HCP → FACT_CALLS
+### DIM_HCP → FACT_CALLS
 
 **Relationship Type:** One-to-Many (1:M) - An HCP may receive multiple sales representative interactions over time.
 **Join Key**
@@ -81,7 +81,7 @@ DIM_HCP.hcp_key = FACT_RX.hcp_key
 ```sql
 DIM_HCP.hcp_key = FACT_CALLS.hcp_key
 ```
-## DIM_HCP → FACT_CLAIMS_PATIENT
+### DIM_HCP → FACT_CLAIMS_PATIENT
 
 **Relationship Type:** One-to-Many (1:M) - A physician can prescribe treatments for many patients, resulting in multiple patient-level claims.
 **Join Key**
@@ -89,7 +89,7 @@ DIM_HCP.hcp_key = FACT_CALLS.hcp_key
 ```sql
 DIM_HCP.hcp_key = FACT_CLAIMS_PATIENT.hcp_key
 ```
-## DIM_REP → FACT_CALLS
+### DIM_REP → FACT_CALLS
 
 **Relationship Type:** One-to-Many (1:M) - A representative can conduct many calls during a reporting period.
 **Join Key**
@@ -97,7 +97,7 @@ DIM_HCP.hcp_key = FACT_CLAIMS_PATIENT.hcp_key
 ```sql
 DIM_REP.rep_key = FACT_CALLS.rep_key
 ```
-## DIM_REP → MAP_TERRITORY_REP
+### DIM_REP → MAP_TERRITORY_REP
 
 **Relationship Type:** One-to-Many (1:M) - A representative may be assigned to different territories over time due to organizational changes.
 **Join Key**
@@ -105,7 +105,7 @@ DIM_REP.rep_key = FACT_CALLS.rep_key
 ```sql
 DIM_REP.rep_key = MAP_TERRITORY_REP.rep_key
 ```
-## DIM_TERRITORY → MAP_TERRITORY_REP
+### DIM_TERRITORY → MAP_TERRITORY_REP
 
 **Relationship Type:** One-to-Many (1:M) - Territories may undergo alignment changes over time. The mapping table stores assignment history and effective dates.
 **Join Key**
@@ -113,7 +113,7 @@ DIM_REP.rep_key = MAP_TERRITORY_REP.rep_key
 ```sql
 DIM_TERRITORY.territory_key = MAP_TERRITORY_REP.territory_key
 ```
-## DIM_TERRITORY → DIM_HCP
+### DIM_TERRITORY → DIM_HCP
 
 **Relationship Type:** One-to-Many (1:M) - A territory generally contains multiple HCPs.
 **Join Key**
@@ -121,7 +121,7 @@ DIM_TERRITORY.territory_key = MAP_TERRITORY_REP.territory_key
 ```sql
 DIM_TERRITORY.territory_key = DIM_HCP.territory_key
 ```
-## DIM_DATE → FACT_CALLS, FACT_CLAIMS, FACT_CLAIMS_PATIENT
+### DIM_DATE → FACT_CALLS, FACT_CLAIMS, FACT_CLAIMS_PATIENT
 
 **Relationship Type:** One-to-Many (1:M) - Many patient claims/sales calls can be processed on a single date.
 
