@@ -71,7 +71,56 @@ The Enterprise Data Warehouse (EDW) follows a **dimensional (Star Schema) modeli
 
 ```sql
 DIM_HCP.hcp_key = FACT_RX.hcp_key
+```
 
+## DIM_HCP → FACT_CALLS
+
+**Relationship Type:** One-to-Many (1:M) - An HCP may receive multiple sales representative interactions over time.
+**Join Key**
+
+```sql
+DIM_HCP.hcp_key = FACT_CALLS.hcp_key
+```
+## DIM_HCP → FACT_CLAIMS_PATIENT
+
+**Relationship Type:** One-to-Many (1:M) - A physician can prescribe treatments for many patients, resulting in multiple patient-level claims.
+**Join Key**
+
+```sql
+DIM_HCP.hcp_key = FACT_CLAIMS_PATIENT.hcp_key
+```
+## DIM_REP → FACT_CALLS
+
+**Relationship Type:** One-to-Many (1:M) - A representative can conduct many calls during a reporting period.
+**Join Key**
+
+```sql
+DIM_REP.rep_key = FACT_CALLS.rep_key
+```
+## DIM_REP → MAP_TERRITORY_REP
+
+**Relationship Type:** One-to-Many (1:M) - A representative may be assigned to different territories over time due to organizational changes.
+**Join Key**
+
+```sql
+DIM_REP.rep_key = MAP_TERRITORY_REP.rep_key
+```
+## DIM_TERRITORY → MAP_TERRITORY_REP
+
+**Relationship Type:** One-to-Many (1:M) - Territories may undergo alignment changes over time. The mapping table stores assignment history and effective dates.
+**Join Key**
+
+```sql
+DIM_TERRITORY.territory_key = MAP_TERRITORY_REP.territory_key
+```
+## DIM_TERRITORY → DIM_HCP
+
+**Relationship Type:** One-to-Many (1:M) - A territory generally contains multiple HCPs.
+**Join Key**
+
+```sql
+DIM_TERRITORY.territory_key = DIM_HCP.territory_key
+```
 
 ## Known limitations / next steps
 
