@@ -22,13 +22,12 @@ See `ERD.pdf` for the full data model.
 
 | # | File | Function |
 |---|---|---|
-| 1 | `DataProfiling.sql` | Row counts, null/duplicate checks, NPI format validation, cross-source referential checks against all 5 raw tables |
-| 2 | `Staging.sql` | Standardizes NPI (`npi` as-landed + `npi_clean` derived), dedupes HCP Master to 1 row per HCP, standardizes dates/casing per source |
-| 3 | `Edw_dims_facts.sql` | `dim_hcp`, `dim_territory`, `dim_rep`, `map_territory_rep`, `dim_date`, `fact_rx`, `fact_calls`, `fact_claims_patient` (atomic), `fact_claims` (HCP/month aggregate) |
-| 4 | `ard_hcp_monthly.sql` | Final ARD: 1 row per HCP per month, combining Rx/calls/claims with derived metrics (rx-per-call ratio, territory/specialty rollups) |
-| 5 | `ard_dq_checks.sql` | Validation suite against the ARD — grain, nulls, referential integrity, row-count and metric reconciliation vs. sources, domain checks |
-| — | `data_profiling_checklist.md` | Reusable profiling checklist template + worked findings for all 5 sources |
-| — | `ERD.pdf` | Star schema diagram |
+| 1 | `01_DataProfiling.sql` | Row counts, null/duplicate checks, NPI format validation, cross-source referential checks against all 5 raw tables |
+| 2 | `02_Staging.sql` | Standardizes NPI (`npi` as-landed + `npi_clean` derived), dedupes HCP Master to 1 row per HCP, standardizes dates/casing per source |
+| 3 | `03_EDW.sql` | `dim_hcp`, `dim_territory`, `dim_rep`, `map_territory_rep`, `dim_date`, `fact_rx`, `fact_calls`, `fact_claims_patient` (atomic), `fact_claims` (HCP/month aggregate) |
+| 4 | `04.ARD.sql` | Final ARD: 1 row per HCP per month, combining Rx/calls/claims with derived metrics (rx-per-call ratio, territory/specialty rollups) |
+| 5 | `05_DataQuality.sql` | Validation suite against the ARD — grain, nulls, referential integrity, row-count and metric reconciliation vs. sources, domain checks |
+| 6 | `ERD.pdf` | Star schema diagram |
 
 ## Key design decisions/Assumptions
 
@@ -48,6 +47,8 @@ See `ERD.pdf` for the full data model.
 
 ## Data Profiling Summary
 
+See `01_DataProfiling.pdf`
+
 | # | Profiling | Xponent_Weekly | HCP_Master | Zip_Territory_Mapping | Claims_Data | Veeva_CRM_Calls |
 |---|---|---|---|---|---|---|
 | 1 | `Null values` | No null values in critical columns | No null values in critical columns | No null values in critical columns | No null values in critical columns| No null values in critical columns|
@@ -60,6 +61,8 @@ See `ERD.pdf` for the full data model.
 ## Entity Relationship Overview
 
 The Enterprise Data Warehouse (EDW) follows a **dimensional (Star Schema) modeling approach**, where fact tables capture business events and dimension tables provide descriptive business context. The model is designed to support commercial analytics use cases such as HCP targeting, physician segmentation, territory performance analysis, and sales force effectiveness.
+
+See `ERD.pdf`
 
 ---
 
