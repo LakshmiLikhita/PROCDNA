@@ -180,7 +180,20 @@ All source datasets were profiled and validated before promotion into the EDW. D
 
 See `05_DataQuality.sql`
 
-## Conclusion
+## Stakeholder Questions & Business Clarifications
+<br>
+
+The sample datasets required several assumptions during modeling and metric development. Prior to a production implementation, the following items would be validated with business stakeholders:
+
+- Confirm business definitions for key metrics such as NRx, TRx, call effectiveness, and territory performance.
+- Validate HCP segmentation, specialty rollups, and KPI calculation logic.
+- Determine whether historical tracking (SCD Type 2) is required for HCP, territory, and representative dimensions.
+- Define business handling of invalid, missing, or unmapped NPIs.
+- Confirm privacy, masking, and access requirements for patient-level analytics.
+- Understand reporting refresh expectations and data latency requirements.
+- Identify additional analytical use cases and future analytics marts required by business teams.
+
+## Conclusion and next steps
 <br>
 
 This project demonstrates an end-to-end commercial analytics data warehouse build, transforming five disparate healthcare datasets into a governed, analytics-ready model. Through data profiling, standardization, dimensional modeling, and data quality validation, the solution delivers a scalable foundation for commercial reporting and analytics across HCP, territory, prescription, claims, and field activity data.
