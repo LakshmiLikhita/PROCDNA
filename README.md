@@ -66,76 +66,30 @@ The Enterprise Data Warehouse (EDW) follows a **dimensional (Star Schema) modeli
 See `ERD.pdf`
 
 ---
+## Entity Relationship Overview
 
-### DIM_HCP → FACT_RX
+The EDW follows a dimensional (Star Schema) model where dimensions provide business context and fact tables capture commercial events.
 
-**Relationship Type:** One-to-Many (1:M) - A single Healthcare Professional (HCP) can generate multiple prescription transactions across different products and reporting periods.
+See `ERD.pdf` for the complete model.
 
-**Join Key**
-
-```sql
-DIM_HCP.hcp_key = FACT_RX.hcp_key
-```
-
-### DIM_HCP → FACT_CALLS
-
-**Relationship Type:** One-to-Many (1:M) - An HCP may receive multiple sales representative interactions over time.
-**Join Key**
-
-```sql
-DIM_HCP.hcp_key = FACT_CALLS.hcp_key
-```
-### DIM_HCP → FACT_CLAIMS_PATIENT
-
-**Relationship Type:** One-to-Many (1:M) - A physician can prescribe treatments for many patients, resulting in multiple patient-level claims.
-**Join Key**
-
-```sql
-DIM_HCP.hcp_key = FACT_CLAIMS_PATIENT.hcp_key
-```
-### DIM_REP → FACT_CALLS
-
-**Relationship Type:** One-to-Many (1:M) - A representative can conduct many calls during a reporting period.
-**Join Key**
-
-```sql
-DIM_REP.rep_key = FACT_CALLS.rep_key
-```
-### DIM_REP → MAP_TERRITORY_REP
-
-**Relationship Type:** One-to-Many (1:M) - A representative may be assigned to different territories over time due to organizational changes.
-**Join Key**
-
-```sql
-DIM_REP.rep_key = MAP_TERRITORY_REP.rep_key
-```
-### DIM_TERRITORY → MAP_TERRITORY_REP
-
-**Relationship Type:** One-to-Many (1:M) - Territories may undergo alignment changes over time. The mapping table stores assignment history and effective dates.
-**Join Key**
-
-```sql
-DIM_TERRITORY.territory_key = MAP_TERRITORY_REP.territory_key
-```
-### DIM_TERRITORY → DIM_HCP
-
-**Relationship Type:** One-to-Many (1:M) - A territory generally contains multiple HCPs.
-**Join Key**
-
-```sql
-DIM_TERRITORY.territory_key = DIM_HCP.territory_key
-```
-### DIM_DATE → FACT_CALLS, FACT_CLAIMS, FACT_CLAIMS_PATIENT
-
-**Relationship Type:** One-to-Many (1:M) - Many patient claims/sales calls can be processed on a single date.
+| Relationship | Cardinality | Join Key | Business Purpose |
+|-------------|-------------|----------|------------------|
+| DIM_HCP → FACT_RX | 1:M | `hcp_key` | Associates HCPs with prescription activity |
+| DIM_HCP → FACT_CALLS | 1:M | `hcp_key` | Associates HCPs with field call activity |
+| DIM_HCP → FACT_CLAIMS_PATIENT | 1:M | `hcp_key` | Associates HCPs with patient-level claims |
+| DIM_REP → FACT_CALLS | 1:M | `rep_key` | Associates representatives with sales calls |
+| DIM_REP → MAP_TERRITORY_REP | 1:M | `rep_key` | Maintains rep-to-territory assignment history |
+| DIM_TERRITORY → MAP_TERRITORY_REP | 1:M | `territory_key` | Maintains territory assignment history |
+| DIM_TERRITORY → DIM_HCP | 1:M | `territory_key` | Associates HCPs to territories |
+| DIM_DATE → FACT_CALLS | 1:M | `date_key` | Supports call activity time-series analysis |
+| DIM_DATE → FACT_CLAIMS | 1:M | `date_key` | Supports claims trend reporting |
+| DIM_DATE → FACT_CLAIMS_PATIENT | 1:M | `date_key` | Supports patient-level longitudinal analysis |
 
 ## Analytics Ready Datasets (ARD)
-<br>
 
 The Analytics Ready Dataset (ARD) layer serves as the primary consumption layer for reporting, dashboarding, and commercial analytics. Built on top of the EDW, the ARDs are designed around business use cases, reducing the need for downstream users to join multiple fact and dimension tables.
 
 See `04_ARD.sql`
-<br>
 
 ### Available ARDs
 
@@ -143,8 +97,6 @@ See `04_ARD.sql`
 - **ARD_Territory_Performance** (Territory + Month)
 - **ARD_Rep_Effectiveness** (Rep + Month)
 - **ARD_Patient_360** (Patient Level)
-
-<br>
 
 ### Key Use Cases
 
@@ -173,7 +125,6 @@ See `04_ARD.sql`
 - Affordability and payer analysis
 - Patient support program targeting
 
-<br>
 
 ## Data Quality Summary
 All source datasets were profiled and validated before promotion into the EDW. Data quality controls were implemented across the pipeline to ensure the final ARD is accurate, complete, and analytically reliable.
@@ -181,7 +132,6 @@ All source datasets were profiled and validated before promotion into the EDW. D
 See `05_DataQuality.sql`
 
 ## Stakeholder Questions & Business Clarifications
-<br>
 
 The sample datasets required several assumptions during modeling and metric development. Prior to a production implementation, the following items would be validated with business stakeholders:
 
@@ -194,7 +144,6 @@ The sample datasets required several assumptions during modeling and metric deve
 - Identify additional analytical use cases and future analytics marts required by business teams.
 
 ## Conclusion and next steps
-<br>
 
 This project demonstrates an end-to-end commercial analytics data warehouse build, transforming five disparate healthcare datasets into a governed, analytics-ready model. Through data profiling, standardization, dimensional modeling, and data quality validation, the solution delivers a scalable foundation for commercial reporting and analytics across HCP, territory, prescription, claims, and field activity data.
 
